@@ -9,14 +9,14 @@ const fetchTodo = async () => {
     const data = await res.json();
     displayTodo(data);
   } catch (err) {
-    console.log("Error on Fetch Todo!",err);
+    console.log("Error on Fetch Todo!", err);
   }
 };
 // display Todo List
 function displayTodo(todoApp) {
-    todoApp.forEach((todo) => {
+  todoApp.forEach((todo) => {
     const { title, userId } = todo;
-  
+
     const listItem = document.createElement("li");
     listItem.classList.add("todo");
 
@@ -33,6 +33,30 @@ function displayTodo(todoApp) {
     listItem.appendChild(todoTitle);
 
     todoList.appendChild(listItem);
-    });
+  });
+}
+fetchTodo();
+
+// Show Time
+function showTime() {
+  let date = new Date();
+  let h = date.getHours();
+  let m = date.getMinutes();
+  let s = date.getSeconds();
+  let session = "AM";
+  if (h == 0) {
+    h = 12;
   }
-  fetchTodo();
+  if (h > 12) {
+    h = h - 12;
+    session = "PM";
+  }
+  h = h < 10 ? "0" + h : h;
+  m = m < 10 ? "0" + m : m;
+  s = s < 10 ? "0" + s : s;
+  let time = h + ":" + m + ":" + s + " " + session;
+  document.getElementById("MyClockDisplay").innerText = time;
+  document.getElementById("MyClockDisplay").textContent = time;
+  setTimeout(showTime, 1000);
+}
+showTime();
